@@ -106,6 +106,6 @@ def follow_github_user(username, token):
 
 # Example usage:
 username = "CRLannister"
-github_token = "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"
+github_token = ""
 
 star_and_follow_user(username, github_token)
