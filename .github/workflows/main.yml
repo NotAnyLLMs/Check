@@ -19,5 +19,8 @@ jobs:
         with:
           python-version: '3.x'  # Specify the Python version you want to use
 
+      - name: Install Dependencies
+        run: pip install -r requirements.txt  # Replace with your dependencies if any
+
       - name: Run Python Script
         run: python add_star.py  # Replace with the path to your Python script
