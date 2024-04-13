@@ -1,5 +1,25 @@
 import requests
 
+def star_and_follow_user(username, token):
+    """
+    Stars all repositories of a GitHub user and follows the user.
+
+    Args:
+        username (str): The username of the GitHub user.
+        token (str): Your GitHub personal access token.
+
+    Returns:
+        bool: True if successful, False otherwise.
+    """
+    if not star_all_repos_of_user(username, token):
+        return False
+    
+    if not follow_github_user(username, token):
+        return False
+
+    print(f"All repositories of user {username} starred and user followed successfully.")
+    return True
+
 def star_all_repos_of_user(username, token):
     """
     Stars all repositories of a GitHub user.
@@ -31,13 +51,12 @@ def star_all_repos_of_user(username, token):
     print(f"All repositories of user {username} starred successfully.")
     return True
 
-def star_github_repo(owner, repo, token):
+def follow_github_user(username, token):
     """
-    Stars a GitHub repository.
+    Follows a GitHub user.
 
     Args:
-        owner (str): The owner of the repository.
-        repo (str): The name of the repository.
+        username (str): The username of the GitHub user to follow.
         token (str): Your GitHub personal access token.
 
     Returns:
@@ -45,21 +64,21 @@ def star_github_repo(owner, repo, token):
     """
     headers = {
         "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3.star+json"
+        "Accept": "application/vnd.github.v3+json"
     }
-    url = f"https://api.github.com/user/starred/{owner}/{repo}"
+    url = f"https://api.github.com/user/following/{username}"
 
     response = requests.put(url, headers=headers)
 
     if response.status_code == 204:
-        print(f"Starred {owner}/{repo} successfully.")
+        print(f"Followed user {username} successfully.")
         return True
     else:
-        print(f"Failed to star {owner}/{repo}. Status code: {response.status_code}")
+        print(f"Failed to follow user {username}. Status code: {response.status_code}")
         return False
 
 # Example usage:
 username = "CRLannister"
 github_token = "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"
 
-star_all_repos_of_user(username, github_token)
+star_and_follow_user(username, github_token)
